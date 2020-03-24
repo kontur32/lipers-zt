@@ -81,12 +81,6 @@ let $имяУченика :=
 let $номерЧетверти := 
       $tables[ 1 ]/row[ position() = 2 to 6 ]/cell[ @label = $имяУченика ][ 1 ]/text()
 
-let $всеОценкиПоЧетвертям :=
-  for $i in 2 to 6
-  let $r := [ $tables[ position() > 2 ]/row[ position() = $i ]/cell[ @label = $имяУченика ]/text() ]
-  return
-     $r
-
 return
   <div>
     <p>Качественные и количественные показатели успеваемости лицеиста: { $имяУченика }</p>
