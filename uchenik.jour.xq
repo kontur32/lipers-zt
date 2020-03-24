@@ -121,4 +121,10 @@ declare function local:main( $data ){
     $result
 };
 
-local:main( . )
+if( $номерЛичногоДела )
+then(
+  local:main( . )
+)
+else(
+  <p>Надо авторизоваться</p>
+)
