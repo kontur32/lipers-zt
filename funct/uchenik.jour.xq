@@ -1,4 +1,4 @@
-import module namespace stud = 'lipers/modules/student' at '../modules/stud.xqm';
+import module namespace stud = 'lipers/modules/student' at 'https://raw.githubusercontent.com/kontur32/lipers-zt/master/modules/stud.xqm';
 
 declare variable $params external;
 declare variable $ID external;
