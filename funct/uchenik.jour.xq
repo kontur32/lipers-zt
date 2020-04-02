@@ -1,31 +1,12 @@
-import module namespace stud = 'lipers/modules/student' at 'https://raw.githubusercontent.com/kontur32/lipers-zt/master/modules/stud.xqm';
+import module namespace stud = 'lipers/modules/student' 
+  at 'https://raw.githubusercontent.com/kontur32/lipers-zt/master/modules/stud.xqm';
 
 declare variable $params external;
 declare variable $ID external;
 declare variable $номерЛичногоДела external;
 
-declare function 
-  local:оценкиПоПредметам(
-      $tables as element( table )*,
-      $идентификакторУченика as xs:string
-    )
-{
-  for $i in $tables
-    let $имяУченикаТекущее := $i/row[ 1 ]/cell[ text() = $идентификакторУченика ]/@label/data()
-    let $предмет := 
-      tokenize( $i/row[ 1 ]/cell[ 1 ]/@label/data(), ',' )[ 1 ]
-    order by $предмет
-    return 
-      let $оценки := 
-        $i/row[ position() >= 7 ]/cell[ @label = $имяУченикаТекущее ]/text()
-    
-      let $оценкиИтоговые := 
-        $i/row[ position() = 3 ]/cell[ @label = $имяУченикаТекущее ]/text()
-      return
-          [ $предмет,  $оценки, $оценкиИтоговые ]
-};
-
 declare
+  %private
 function 
   local:оценкиПоПредметамИтоговые(
      $tables as element( table )*,
@@ -57,12 +38,14 @@ declare function local:main( $data ){
   
   let $имяУченика := 
     ( $tables/row[ 1 ]/cell[ text() = $номерЛичногоДела ]/@label/data() )[ 1 ]
-  
-  let $оценкиПоПредметам := 
-    local:оценкиПоПредметам( $tables, $номерЛичногоДела )
     
-  let $оценкиПоПредметам1 := 
-    stud:записиПоВсемПредметамЗаПериод( $tables, $номерЛичногоДела, xs:date( '2020-01-09' ), xs:date( '2020-03-23' ) )  
+  let $оценкиПоПредметам := 
+    stud:записиПоВсемПредметамЗаПериод(
+      $tables,
+      $номерЛичногоДела,
+      xs:date( '2020-01-09' ),
+      xs:date( '2020-03-23' )
+    )  
     
   let $оценкиПоПредметамИтоговые := 
     local:оценкиПоПредметамИтоговые( $tables, $номерЛичногоДела )
@@ -78,7 +61,7 @@ declare function local:main( $data ){
              <th>Средний балл</th>
           </tr>
           {
-            for $i in $оценкиПоПредметам1[ position() >= 2 ]
+            for $i in $оценкиПоПредметам[ position() >= 2 ]
             let $оценки := $i?2?2[ number( . ) >0 ]
             return
               <tr>
@@ -104,7 +87,7 @@ declare function local:main( $data ){
            )
        }</tr>
        {
-        for $p in $оценкиПоПредметамИтоговые[ position() > 1 ]
+        for $p in $оценкиПоПредметамИтоговые[ position() >= 2 ]
         return 
            <tr> 
              <td> { $p?1 } </td>
