@@ -78,7 +78,7 @@ declare function local:main( $data ){
              <th>Средний балл</th>
           </tr>
           {
-            for $i in $оценкиПоПредметам1
+            for $i in $оценкиПоПредметам1[ position() >= 2 ]
             let $оценки := $i?2?2[ number( . ) >0 ]
             return
               <tr>
