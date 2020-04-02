@@ -1,5 +1,3 @@
-import module namespace stud = 'lipers/modules/student' at '../modules/stud.xqm';
-
 declare variable $params external;
 declare variable $ID external;
 declare variable $номерЛичногоДела external;
@@ -60,10 +58,7 @@ declare function local:main( $data ){
   
   let $оценкиПоПредметам := 
     local:оценкиПоПредметам( $tables, $номерЛичногоДела )
-    
-  let $оценкиПоПредметам1 := 
-    stud:записиПоВсемПредметамЗаПериод( $tables, $номерЛичногоДела, xs:date( '2020-01-09' ), xs:date( '2020-03-23' ) )  
-    
+  
   let $оценкиПоПредметамИтоговые := 
     local:оценкиПоПредметамИтоговые( $tables, $номерЛичногоДела )
     
@@ -77,17 +72,21 @@ declare function local:main( $data ){
              <th width="33%">Текущие оценки</th>
              <th>Средний балл</th>
           </tr>
-          {
-            for $i in $оценкиПоПредметам1
-            let $оценки := $i?2?2[ number( . ) >0 ]
+        {
+          for $i in $оценкиПоПредметам[ position() > 1 ]
+          let $оценки := 
+            for $k in $i?2 
+            where number( $k )
             return
-              <tr>
-                <td>{ $i?1 }</td>
-                <td>{ string-join( $i?2?2, ', ' ) }</td>
-                <td>средний балл: { round( avg( $оценки ), 1 ) }</td>
-              </tr>
-          }
-      </table>
+              number( $k )
+          return
+               <tr> 
+                 <td>{ $i?1 }</td>
+                 <td>{ string-join( $i?2, ', ' ) }</td>
+                 <td>{ 'средний балл: ' || round( avg( $оценки ), 1 ) }</td>
+               </tr>
+               
+      }</table>
       
       <p><center>Оценки за четверть и год</center></p>
       <table width="100%" border='1'>
