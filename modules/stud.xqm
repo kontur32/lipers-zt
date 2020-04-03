@@ -30,10 +30,10 @@ stud:записиЗаПериод(
   let $имяУченика :=  $data/row[ 1 ]/cell[ text() = $идентификаторУченика ]/@label/data()
   let $урокиОтметкиУченика := 
     $data/row[ position() >= 7 ][ cell[ @label = $имяУченика ]/text() ]
-  for $i in $урокиОтметкиУченика[ not ( empty( cell[ 1 ]/text() ) ) ]
+  
+  for $i in $урокиОтметкиУченика[ cell[ 1 ]/text() != ""  ]
   let $date := stud:date( $i/cell[ 1 ]/text() )
   where not( empty( $date ) )
-  
   where $date >= $начальнаяДата and $date <= $конечнаяДата
   return
     [
@@ -58,26 +58,5 @@ stud:записиПоВсемПредметамЗаПериод(
     [
       $i/row[ 1 ]/cell[ 1 ]/@label/substring-before( data(), ',' ),
       stud:записиЗаПериод( $i, $идентификаторУченика, $начальнаяДата, $конечнаяДата )
-    ]
-};
-
-declare
-  %public 
-function 
-stud:записиПоВсемПредметамЗаПериод(
-  $data as element( table )*,
-  $идентификаторУченика as xs:string
-)
-  as item()*
-{
-  for $i in $data[ row[ 1 ]/cell/text() = $идентификаторУченика ]
-  return
-    [
-      $i/row[ 1 ]/cell[ 1 ]/@label/substring-before( data(), ',' ),
-      stud:записиЗаПериод(
-        $i, $идентификаторУченика,
-        xs:date( '2020-01-09' ),
-        xs:date( '2020-03-23' )
-      )
     ]
 };
