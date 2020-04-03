@@ -12,7 +12,7 @@ declare function stud:date( $date as xs:string ) as xs:date* {
     then(
        dateTime:dateParseExcel( xs:integer( $date ) )
     )
-    else( '1974-10-28')
+    else( xs:date( '1974-10-28') )
   )
 };
 
