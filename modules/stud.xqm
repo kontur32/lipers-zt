@@ -12,7 +12,7 @@ declare function stud:date( $date as xs:string ) as xs:date* {
     then(
        dateTime:dateParseExcel( xs:integer( $date ) )
     )
-    else()
+    else( '1974-10-28')
   )
 };
 
@@ -33,6 +33,7 @@ stud:записиЗаПериод(
   for $i in $урокиОтметкиУченика
   let $date := stud:date( $i/cell[ 1 ]/text() )
   where not( empty( $date ) )
+  
   where $date >= $начальнаяДата and $date <= $конечнаяДата
   return
     [
@@ -57,5 +58,26 @@ stud:записиПоВсемПредметамЗаПериод(
     [
       $i/row[ 1 ]/cell[ 1 ]/@label/substring-before( data(), ',' ),
       stud:записиЗаПериод( $i, $идентификаторУченика, $начальнаяДата, $конечнаяДата )
+    ]
+};
+
+declare
+  %public 
+function 
+stud:записиПоВсемПредметамЗаПериод(
+  $data as element( table )*,
+  $идентификаторУченика as xs:string
+)
+  as item()*
+{
+  for $i in $data[ row[ 1 ]/cell/text() = $идентификаторУченика ]
+  return
+    [
+      $i/row[ 1 ]/cell[ 1 ]/@label/substring-before( data(), ',' ),
+      stud:записиЗаПериод(
+        $i, $идентификаторУченика,
+        xs:date( '2020-01-09' ),
+        xs:date( '2020-03-23' )
+      )
     ]
 };
