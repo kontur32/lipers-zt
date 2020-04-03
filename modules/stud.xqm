@@ -30,7 +30,7 @@ stud:записиЗаПериод(
   let $имяУченика :=  $data/row[ 1 ]/cell[ text() = $идентификаторУченика ]/@label/data()
   let $урокиОтметкиУченика := 
     $data/row[ position() >= 7 ][ cell[ @label = $имяУченика ]/text() ]
-  for $i in $урокиОтметкиУченика
+  for $i in $урокиОтметкиУченика[ cell[ 1 ]/text() ]
   let $date := stud:date( $i/cell[ 1 ]/text() )
   where not( empty( $date ) )
   
