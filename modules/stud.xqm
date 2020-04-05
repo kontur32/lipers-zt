@@ -67,16 +67,16 @@ declare
   %public 
 function
   stud:промежуточнаяАттестацияУченика(
-     $data as element( table ),
+     $data as element( table )*,
      $идентификаторУченика as xs:string
    )
 {
   let $table := $data[ row[ 1 ]/cell[ text() = $идентификаторУченика ] ]
   
-  let $имяУченика :=  $data/row[ 1 ]/cell[ text() = $идентификаторУченика ]/@label/data()
+  let $имяУченика :=  $table/row[ 1 ]/cell[ text() = $идентификаторУченика ]/@label/data()
    
   for $i in $table
-  let $предмет := tokenize( $i/row[1]/cell[1]/@label/data(), ',' )[ 1 ]
+  let $предмет := tokenize( $i/row[ 1 ]/cell[ 1 ]/@label/data(), ',' )[ 1 ]
   where not ( matches( $предмет, '!' ) )
   order by $предмет  
   return
