@@ -80,5 +80,5 @@ function
   where not ( matches( $предмет, '!' ) )
   order by $предмет  
   return
-    [ $предмет, $i/row[ position() = ( 2 to 6 ) ]/cell[ @label = $имяУченика ]/text() ]
+    [ $предмет, $i/row[ position() = ( 2 to 6 ) ]/cell[ @label = $имяУченика ]/data() ]
 };
