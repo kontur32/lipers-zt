@@ -60,3 +60,16 @@ stud:записиПоВсемПредметамЗаПериод(
       stud:записиЗаПериод( $i, $идентификаторУченика, $начальнаяДата, $конечнаяДата )
     ]
 };
+
+declare function stud:промежуточнаяАттестацияУченика( $data, $идентификаторУченика ){
+  let $table := $data[ row[ 1 ]/cell[ text() = $идентификаторУченика ] ]
+  
+  let $имяУченика :=  $data/row[ 1 ]/cell[ text() = $идентификаторУченика ]/@label/data()
+   
+  for $i in $table
+  let $предмет := tokenize( $i/row[1]/cell[1]/@label/data(), ',' )[ 1 ]
+  where not ( matches( $предмет, '!' ) )
+  order by $предмет  
+  return
+    [ $предмет, $i/row[ position() = ( 2 to 6 ) ]/cell[ @label = $имяУченика ]/text() ]
+};
