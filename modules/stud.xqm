@@ -54,14 +54,23 @@ stud:записиПоВсемПредметамЗаПериод(
   as item()*
 {
   for $i in $data[ row[ 1 ]/cell/text() = $идентификаторУченика ]
+  let $предмет := tokenize( $i/row[ 1 ]/cell[ 1 ]/@label/data(), ',' )[ 1 ]
+  order by $предмет
   return
     [
-      $i/row[ 1 ]/cell[ 1 ]/@label/substring-before( data(), ',' ),
+      $предмет,
       stud:записиЗаПериод( $i, $идентификаторУченика, $начальнаяДата, $конечнаяДата )
     ]
 };
 
-declare function stud:промежуточнаяАттестацияУченика( $data, $идентификаторУченика ){
+declare
+  %public 
+function
+  stud:промежуточнаяАттестацияУченика(
+     $data as element( table ),
+     $идентификаторУченика as xs:string
+   )
+{
   let $table := $data[ row[ 1 ]/cell[ text() = $идентификаторУченика ] ]
   
   let $имяУченика :=  $data/row[ 1 ]/cell[ text() = $идентификаторУченика ]/@label/data()
