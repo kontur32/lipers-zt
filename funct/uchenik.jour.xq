@@ -109,21 +109,19 @@ declare function local:main( $data ){
            <th width="10%">Год</th>
         </tr>
      {
-      for $p in stud:промежуточнаяАттестацияУченика( $data, '49/К' )
+      for $p in stud:промежуточнаяАттестацияУченика( $data, $номерЛичногоДела )
       return 
          <tr> 
            <td> { $p?1 } </td>
-           <td> { $p?2[1] } </td>
-           <td> { $p?2[2] } </td>
-           <td> { $p?2[3] } </td>
-           <td> { $p?2[4] } </td>
-           <td> { $p?2[5] } </td>
+           <td> { $p?2[ 1 ] } </td>
+           <td> { $p?2[ 2 ] } </td>
+           <td> { $p?2[ 3 ] } </td>
+           <td> { $p?2[ 4 ] } </td>
+           <td> { $p?2[ 5 ] } </td>
          </tr>
       }
     </table>
-        
     </div>
-  
   return
     $result
 };
