@@ -109,7 +109,7 @@ declare function local:main( $data ){
            <th width="10%">Год</th>
         </tr>
      {
-      for $p in stud:промежуточнаяАттестацияУченика( $data, $номерЛичногоДела )
+      for $p in stud:промежуточнаяАттестацияУченика( $tables, $номерЛичногоДела )
       return 
          <tr> 
            <td> { $p?1 } </td>
