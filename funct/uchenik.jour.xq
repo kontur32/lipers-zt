@@ -99,6 +99,29 @@ declare function local:main( $data ){
            </tr>
         }
         </table>
+   <table width="100%" border='1'>
+     <tr>
+           <th width="20%">Предмет</th>
+           <th width="10%">Четверть I</th>
+           <th width="10%">Четверть II</th>
+           <th width="10%">Четверть III</th>
+           <th width="10%">Четверть IV</th>
+           <th width="10%">Год</th>
+        </tr>
+     {
+      for $p in stud:промежуточнаяАттестацияУченика( $data, '49/К' )
+      return 
+         <tr> 
+           <td> { $p?1 } </td>
+           <td> { $p?2[1] } </td>
+           <td> { $p?2[2] } </td>
+           <td> { $p?2[3] } </td>
+           <td> { $p?2[4] } </td>
+           <td> { $p?2[5] } </td>
+         </tr>
+      }
+    </table>
+        
     </div>
   
   return
