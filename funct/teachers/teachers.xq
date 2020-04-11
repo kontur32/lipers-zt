@@ -61,7 +61,7 @@ let $шаблонФормыЛогина :=
   )   
    
 let $шаблонПодвала := 
-  fetch:xml(
+  fetch:text(
     "http://iro37.ru/res/trac-src/xqueries/lipers/html.tpl/footer.tpl.html"
   )
 
@@ -122,7 +122,7 @@ let $параметрыШаблона :=
            'loginForm' : $loginForm
          }
        ),
-     'footer' : $шаблонПодвала
+     'footer' : tpl:xhtml( $шаблонПодвала, map{} )
    }
 
 return
