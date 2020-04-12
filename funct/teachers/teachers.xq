@@ -115,9 +115,14 @@ let $параметрыШаблона :=
            'menu' : 
              <div>
                <h1>Личный кабинет сотрудника</h1>
+               <a href = "?page=teachers.planKids">Расписание учеников</a>
+               <a href = "?page=teachers.planTeachers">Расписание педагогов</a>
                <a href = "?page=teachers.quality">Качество знаний</a>
-               <a href = "?page=teachers.konduit">Пропуски</a>
+               <a href = "?page=teachers.konduit">Количество пропусков учеников за четверть</a>
+               <a href = "?page=teachers.contactsKids">Контакты родителей и детей</a>
+               <a href = "?page=teachers.contactsTeachers">Контакты сотрудников Лицея</a>
                <a href = "?page=teachers.others">Всякое-разное</a>
+               
              </div>,
            'loginForm' : $loginForm
          }
