@@ -28,14 +28,23 @@ function stud:ученики( $данные as element( table )* ){
     $данные/row[ 1 ][ not ( matches( cell[ 1 ]/@label/data(), '!' ) ) ]/cell[ position() >= 3 ][ text() ]
     
     let $журналыПоПредметам1 := 
-      $данные/row[ 1 ][ not ( matches( cell[ 1 ]/@label/data(), '!' ) ) ]
+      $данные/row[ 1 ][ not ( matches( cell[ 1 ]/@label/data(), '!' ) ) ][ text() ]
       
     let $идентификаторы := 
-      $журналыПоПредметам1/cell[ position() >= 3 ][ text() ]/text()
+      $журналыПоПредметам1/cell[ position() >= 3 ]/text()
       
     for $i in distinct-values( $идентификаторы )
+    let $a := $журналыПоПредметам1/cell
+    let $класс := 
+      substring-after(
+        $журналыПоПредметам1[ cell[ text() = $i ] ][ 1 ]/cell[ 1 ]/@label/data(), ',' 
+      )
     return 
-      [ $i, $журналыПоПредметам[ text() = $i ][ 1 ]/@label/data() ]
+      [
+        normalize-space( $i ),
+        normalize-space( $a[ text() = $i ][ 1 ]/@label/data() ),
+        normalize-space( $класс )
+      ]
 };
 
 declare
