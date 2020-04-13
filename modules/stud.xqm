@@ -16,6 +16,15 @@ declare function stud:date( $date as xs:string ) as xs:date* {
   )
 };
 
+declare function stud:ученики( $data as element( table )* ){
+   let $журналыПоПредметам := 
+    $data/row[ 1 ][ not ( matches( cell[ 1 ]/@label/data(), '!' ) ) ]/cell[ position() >= 3 ][ text() ]
+
+    for $i in distinct-values( $журналыПоПредметам/text() )
+    return 
+      [ $i, $журналыПоПредметам[ text() = $i ][ 1 ]/@label/data() ]
+};
+
 declare
   %public 
 function 
@@ -48,7 +57,7 @@ stud:записиЗаПериод(
  : @param  $ученик идентификатор ученик
  : @param  $начальнаДата начальная дата
  : @param  $конечнаяДата конечная дата
- : @return page
+ : @return неименованный массив [ 'предмет', ( множество( записи журнала ) ) ]
  :)
 declare
   %public 
@@ -78,7 +87,7 @@ stud:записиПоВсемПредметамЗаПериод(
  : @param  $идентификаторУченика идентификатор ученик
  : @param  $начальнаДата начальная дата
  : @param  $конечнаяДата конечная дата
- : @return page
+ : @return неименованный массив [ 'предмет', количествоПропусков ]
  :)
 declare 
   %public
