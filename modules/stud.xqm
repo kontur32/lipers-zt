@@ -75,7 +75,7 @@ stud:записиПоВсемПредметамЗаПериод(
 declare 
   %public
 function stud:количествоПропусковПоПредметам(
-    $данные as element( table ),
+    $данные as element( table )*,
     $ученик as xs:string,
     $начальнаДата as xs:date,
     $конечнаяДата as xs:date
