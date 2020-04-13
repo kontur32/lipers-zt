@@ -16,9 +16,16 @@ declare function stud:date( $date as xs:string ) as xs:date* {
   )
 };
 
-declare function stud:ученики( $data as element( table )* ){
+(:~
+ : Возвращает список учеников из массива журналов
+ : @param  $данные  данные журналов по предметам
+ : @return неименованный массив [ идентификатор, ФИО ]
+ :)
+declare
+  %public
+function stud:ученики( $данные as element( table )* ){
    let $журналыПоПредметам := 
-    $data/row[ 1 ][ not ( matches( cell[ 1 ]/@label/data(), '!' ) ) ]/cell[ position() >= 3 ][ text() ]
+    $данные/row[ 1 ][ not ( matches( cell[ 1 ]/@label/data(), '!' ) ) ]/cell[ position() >= 3 ][ text() ]
 
     for $i in distinct-values( $журналыПоПредметам/text() )
     return 
