@@ -3,7 +3,7 @@ module namespace stud = 'lipers/modules/student';
 import module namespace dateTime = 'dateTime' at 'http://iro37.ru/res/repo/dateTime.xqm';
 
 declare function stud:date( $date as xs:string ) as xs:date* {
-  if( matches( $date, '\d{2}.\d{2}.\d{4}' ) )
+  if( matches( $date, '\d{2}.\d{2}.\d{4}$' ) )
   then(
     dateTime:dateParseComaSeparate( $date )
   )
@@ -33,7 +33,7 @@ function stud:ученики( $данные as element( table )* ){
     let $идентификаторы := 
       $журналыПоПредметам1/cell[ position() >= 3 ][ text() ]/text()
       
-    for $i in distinct-values( $журналыПоПредметам/text() )
+    for $i in distinct-values( $идентификаторы )
     return 
       [ $i, $журналыПоПредметам[ text() = $i ][ 1 ]/@label/data() ]
 };
