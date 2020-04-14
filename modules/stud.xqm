@@ -23,28 +23,25 @@ declare function stud:date( $date as xs:string ) as xs:date* {
  :)
 declare
   %public
-function stud:ученики( $данные as element( table )* ){
-   let $журналыПоПредметам := 
-    $данные/row[ 1 ][ not ( matches( cell[ 1 ]/@label/data(), '!' ) ) ]/cell[ position() >= 3 ][ text() ]
+function stud:ученики( $данные as element( table )* ){ 
+  let $журналыПоПредметам := 
+    $данные/row[ 1 ][ not ( matches( cell[ 1 ]/@label/data(), '!' ) ) ][ text() ]
     
-    let $журналыПоПредметам1 := 
-      $данные/row[ 1 ][ not ( matches( cell[ 1 ]/@label/data(), '!' ) ) ][ text() ]
-      
-    let $идентификаторы := 
-      $журналыПоПредметам1/cell[ position() >= 3 ]/text()
-      
-    for $i in distinct-values( $идентификаторы )
-    let $a := $журналыПоПредметам1/cell
-    let $класс := 
-      substring-after(
-        $журналыПоПредметам1[ cell[ text() = $i ] ][ 1 ]/cell[ 1 ]/@label/data(), ',' 
-      )
-    return 
-      [
-        normalize-space( $i ),
-        normalize-space( $a[ text() = $i ][ 1 ]/@label/data() ),
-        normalize-space( $класс )
-      ]
+  let $идентификаторы := 
+    distinct-values( $журналыПоПредметам/cell[ position() >= 3 ]/text() )
+    
+  for $i in $идентификаторы
+  let $a := $журналыПоПредметам/cell
+  let $класс := 
+    substring-after(
+      $журналыПоПредметам[ cell[ text() = $i ] ][ 1 ]/cell[ 1 ]/@label/data(), ',' 
+    )
+  return 
+    [
+      normalize-space( $i ),
+      normalize-space( $a[ text() = $i ][ 1 ]/@label/data() ),
+      normalize-space( $класс )
+    ]
 };
 
 declare
