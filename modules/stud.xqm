@@ -34,7 +34,7 @@ function stud:ученики( $данные as element( table )* ){
   let $a := $журналыПоПредметам/cell
   let $класс := 
     substring-after(
-      $журналыПоПредметам[ cell[ text() = $i ] ][ 1 ]/cell[ 1 ]/@label/data(), ',' 
+      $журналыПоПредметам[ text() = $i ][ 1 ]/cell[ 1 ]/@label/data(), ',' 
     )
   return 
     [
