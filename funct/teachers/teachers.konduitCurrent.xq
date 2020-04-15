@@ -7,8 +7,6 @@ declare variable $должность external;
 
 let $data := ./file/table
 
-let $host := 'http://' || request:hostname() || ':' || request:port() 
-
 let $date :=
   if( matches( $params?date, '^\d{4}-\d{2}-\d{2}$') )
   then( xs:date( $params?date ) )
@@ -31,16 +29,17 @@ let $результат :=
   return
     <div><p> { $ученик?2 } ({ $ученик?3 }): { string-join( $пропускиПоПредметам, ', ' ) }</p></div>
 
+let $host := 'http://' || request:hostname() || ':' || request:port() 
 let $actionURL := 
         $host || '/zapolnititul/api/v2.1/data/publication/' || $ID   
-let $dateForm := tokenize( xs:string( $date ), '\+' ) 
+let $dateForm := tokenize( xs:string( $date ), '\+' )[ 1 ] 
 
 return 
   <div>
     <div>
       <form action="{ $actionURL }">
         <input type="date" name="date" value="{ $dateForm }"/>
-        <input type="hidden" name="page" value="teachers.konduitCurrent"/>
+        <input type="hidden" name="page" value="{ $params?page }"/>
         <input type="submit" value="Выбрать дату"/>
       </form>
     </div>
