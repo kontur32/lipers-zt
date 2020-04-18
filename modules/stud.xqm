@@ -12,7 +12,11 @@ declare function stud:date( $date as xs:string ) as xs:date* {
     then(
        dateTime:dateParseExcel( xs:integer( $date ) )
     )
-    else( xs:date( '1974-10-28') )
+    else(
+      if( matches( $date, '\d{4}-\d{2}-\d{2}$' ))
+      then( xs:date( $date ) )
+      else( xs:date( '1974-10-28') )
+    )
   )
 };
 
@@ -90,7 +94,8 @@ stud:записиПоВсемПредметамЗаПериод(
   as item()*
 {
   for $i in $data[ row[ 1 ]/cell/text() = $идентификаторУченика ]
-  let $предмет := tokenize( $i/row[ 1 ]/cell[ 1 ]/@label/data(), ',' )[ 1 ]
+  let $предмет :=
+    tokenize( normalize-space( $i/row[ 1 ]/cell[ 1 ]/@label/data() ), ',' )[ 1 ]
   order by $предмет
   return
     [
