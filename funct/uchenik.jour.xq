@@ -33,8 +33,7 @@ declare function local:main( $data, $номерЛичногоДела ){
         {
           for $i in $оценкиПоПредметам[ position() >= 2 ]
           let $оценки := $i?2?2[ number( . ) > 0 ]
-          let $количествоПропусков := count( $i?2[ ?2 = 'н' ] )
-            
+          let $количествоПропусков := count( $i?2[ ?2 = 'н' ] )            
           return
             <tr>
               <td>{ $i?1 }</td>

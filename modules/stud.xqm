@@ -95,7 +95,7 @@ stud:записиПоВсемПредметамЗаПериод(
 {
   for $i in $data[ row[ 1 ]/cell/text() = $идентификаторУченика ]
   let $предмет :=
-    tokenize( normalize-space( $i/row[ 1 ]/cell[ 1 ]/@label/data() ), ',' )[ 1 ]
+    normalize-space( tokenize(  $i/row[ 1 ]/cell[ 1 ]/@label/data(), ',' )[ 1 ] )
   order by $предмет
   return
     [
