@@ -46,13 +46,13 @@ declare function local:main( $data, $номерЛичногоДела ){
    <p><center>Оценки за четверть и год</center></p>
    <table width="100%" border='1'>
      <tr>
-           <th width="20%">Предмет</th>
-           <th width="10%">Четверть I</th>
-           <th width="10%">Четверть II</th>
-           <th width="10%">Четверть III</th>
-           <th width="10%">Четверть IV</th>
-           <th width="10%">Год</th>
-        </tr>
+       <th width="20%">Предмет</th>
+       <th width="10%">Четверть I</th>
+       <th width="10%">Четверть II</th>
+       <th width="10%">Четверть III</th>
+       <th width="10%">Четверть IV</th>
+       <th width="10%">Год</th>
+    </tr>
      {
       for $p in $оценкиПромежуточнойАттестации
       return 
