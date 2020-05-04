@@ -5,7 +5,7 @@ declare variable $params external;
 declare variable $ID external;
 declare variable $должность external;
 
-declare function local:класс( $data, $class ){
+declare function local:класс( $data, $class as xs:string ){
   let $d := $data[ matches( row[ 1 ]/cell[ 1 ]/@label/data(), $class ) ]
   return
   if( $d[1]/row[ 1 ]/cell[ position() >= 3 ]/text() )
@@ -23,7 +23,7 @@ let $data :=
 let $class :=
   if( number( $params?class ) = ( 5 to 11 ) )
   then( $params?class )
-  else( 5 )
+  else( '5' )
 
 let $класс := local:класс( $data, $class )
 
@@ -36,7 +36,7 @@ let $оценкиУчеников :=
 let $предметы := sort( distinct-values( $оценкиУчеников?2?1 ) )
 
 let $промежуткиАттестации := 
-  if( $class <= 9 )
+  if( number( $class ) <= 9 )
   then(
     ( '1-ая четверть', '2-ая четверть', '3-ая четверть', '4-ая четверть', 'Год' )
   )
