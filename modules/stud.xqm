@@ -8,7 +8,7 @@ declare function stud:date( $date as xs:string ) as xs:date* {
     dateTime:dateParseComaSeparate( $date )
   )
   else(
-    if( matches( $date, '\d{5}' ) )
+    if( matches( $date, '^\d{5}$' ) )
     then(
        dateTime:dateParseExcel( xs:integer( $date ) )
     )
